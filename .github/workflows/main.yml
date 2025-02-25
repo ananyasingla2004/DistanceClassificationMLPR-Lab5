@@ -5,14 +5,20 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
           python-version: '3.11'
+
       - name: Install dependencies
         run: |
-          pip install numpy pandas scikit-learn opencv-python-headless matplotlib nbconvert
+          sudo apt-get update
+          sudo apt-get install -y xvfb libgtk2.0-dev pkg-config
+          pip install numpy pandas scikit-learn opencv-python matplotlib nbconvert
+
       - name: Convert Notebook to Script
         run: jupyter nbconvert --to script Ananya_Lab5.ipynb
-      - name: Run test script
-        run: python Ananya_Lab5.py
+
+      - name: Run test script with virtual display
+        run: xvfb-run --auto-servernum python Ananya_Lab5.py
