@@ -11,7 +11,7 @@ jobs:
           python-version: '3.11'
       - name: Install dependencies
         run: |
-          pip install numpy pandas scikit-learn nbconvert
+          pip install numpy pandas scikit-learn opencv-python-headless nbconvert
       - name: Convert Notebook to Script
         run: jupyter nbconvert --to script Ananya_Lab5.ipynb
       - name: Run test script
