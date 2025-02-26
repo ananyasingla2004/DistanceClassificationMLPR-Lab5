@@ -9,3 +9,23 @@
 {"time":"2025-02-26T12:25:41.837864+05:30","level":"INFO","msg":"Resuming system monitor"}
 {"time":"2025-02-26T12:25:43.079838+05:30","level":"INFO","msg":"Pausing system monitor"}
 {"time":"2025-02-26T12:36:25.283295+05:30","level":"INFO","msg":"api: retrying error","error":"Post \"https://api.wandb.ai/files/ananya-singla-ug23-plaksha/DistanceClassificationMLPR-Lab5/bab89hgv/file_stream\": read tcp 10.1.58.178:60774->35.186.228.49:443: read: connection reset by peer"}
+{"time":"2025-02-26T13:01:29.627319+05:30","level":"INFO","msg":"Resuming system monitor"}
+{"time":"2025-02-26T13:01:30.091318+05:30","level":"INFO","msg":"Pausing system monitor"}
+{"time":"2025-02-26T13:01:32.634803+05:30","level":"INFO","msg":"Resuming system monitor"}
+{"time":"2025-02-26T13:01:32.900478+05:30","level":"INFO","msg":"Pausing system monitor"}
+{"time":"2025-02-26T13:01:34.108759+05:30","level":"INFO","msg":"Resuming system monitor"}
+{"time":"2025-02-26T13:01:34.206462+05:30","level":"INFO","msg":"Pausing system monitor"}
+{"time":"2025-02-26T13:01:36.203822+05:30","level":"INFO","msg":"Resuming system monitor"}
+{"time":"2025-02-26T13:01:36.31169+05:30","level":"INFO","msg":"Pausing system monitor"}
+{"time":"2025-02-26T13:01:37.536063+05:30","level":"INFO","msg":"Resuming system monitor"}
+{"time":"2025-02-26T13:01:37.622535+05:30","level":"INFO","msg":"Pausing system monitor"}
+{"time":"2025-02-26T13:02:35.285166+05:30","level":"INFO","msg":"Resuming system monitor"}
+{"time":"2025-02-26T13:02:35.43586+05:30","level":"INFO","msg":"Pausing system monitor"}
+{"time":"2025-02-26T13:02:50.211412+05:30","level":"INFO","msg":"Resuming system monitor"}
+{"time":"2025-02-26T13:02:50.358843+05:30","level":"INFO","msg":"Pausing system monitor"}
+{"time":"2025-02-26T13:03:14.444835+05:30","level":"INFO","msg":"Resuming system monitor"}
+{"time":"2025-02-26T13:03:14.47344+05:30","level":"INFO","msg":"Pausing system monitor"}
+{"time":"2025-02-26T13:03:52.486842+05:30","level":"INFO","msg":"Resuming system monitor"}
+{"time":"2025-02-26T13:03:52.619024+05:30","level":"INFO","msg":"Pausing system monitor"}
+{"time":"2025-02-26T13:04:32.00728+05:30","level":"INFO","msg":"Resuming system monitor"}
+{"time":"2025-02-26T13:04:32.308771+05:30","level":"INFO","msg":"Pausing system monitor"}
