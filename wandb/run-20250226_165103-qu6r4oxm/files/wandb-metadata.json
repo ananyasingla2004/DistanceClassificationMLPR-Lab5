@@ -1,0 +1,44 @@
+{
+  "os":  "macOS-14.4-arm64-arm-64bit-Mach-O",
+  "python":  "CPython 3.13.0",
+  "startedAt":  "2025-02-26T11:21:03.333902Z",
+  "program":  "/Users/ananyasingla/Downloads/PLAKSHA COLLEGE/SEM 4/MLPR/DistanceClassificationMLPR-Lab5/Ananya_Lab5.ipynb",
+  "codePath":  "Ananya_Lab5.ipynb",
+  "git":  {
+    "remote":  "https://github.com/ananyasingla2004/DistanceClassificationMLPR-Lab5.git",
+    "commit":  "d7fb5aba8bfe017eb9d67bec262e19aebc225285"
+  },
+  "email":  "ananya.singla.ug23@plaksha.edu.in",
+  "root":  "/Users/ananyasingla/Downloads/PLAKSHA COLLEGE/SEM 4/MLPR/DistanceClassificationMLPR-Lab5",
+  "host":  "Ananyas-MacBook-Pro.local",
+  "executable":  "/usr/local/bin/python3",
+  "codePathLocal":  "Ananya_Lab5.ipynb",
+  "cpu_count":  10,
+  "cpu_count_logical":  10,
+  "disk":  {
+    "/":  {
+      "total":  "494384795648",
+      "used":  "390438465536"
+    },
+    "/System/Volumes/Data":  {
+      "total":  "494384795648",
+      "used":  "390438465536"
+    }
+  },
+  "memory":  {
+    "total":  "17179869184"
+  },
+  "cpu":  {
+    "count":  10,
+    "countLogical":  10
+  },
+  "apple":  {
+    "name":  "Apple M2 Pro",
+    "ecpuCores":  4,
+    "pcpuCores":  6,
+    "gpuCores":  16,
+    "memoryGb":  16,
+    "swapTotalBytes":  "10737418240",
+    "ramTotalBytes":  "17179869184"
+  }
+}
