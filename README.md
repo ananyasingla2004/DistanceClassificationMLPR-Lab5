@@ -12,36 +12,31 @@
 
 ## Distance-Based Classification Algorithms  
 
-### 1. Common Distance Metrics  
-Distance-based classification algorithms rely on various distance metrics to measure similarity between data points. Some commonly used metrics include:  
+#### 1. What are the common distance metrics used in distance-based classification algorithms?  
+a. Euclidean distance  
+b. Manhattan distance  
+c. Minkowski distance  
+d. Mahalanobis distance  
+e. Cosine distance  
+f. Chebyshev distance  
 
-- **Euclidean Distance**  
-- **Manhattan Distance**  
-- **Minkowski Distance**  
-- **Mahalanobis Distance**  
-- **Cosine Distance**  
-- **Chebyshev Distance**  
+#### 2. What are some real-world applications of distance-based classification algorithms?  
+Recommendation systems in e-commerce and streaming platforms, where user-item similarity is calculated using distance metrics for personalized content suggestions.  
 
-### 2. Real-World Applications  
-Distance-based classification algorithms are widely used in various applications, such as:  
+#### 3. Explain various distance metrics.  
+The Minkowski distance is given by:  
 
-- **Recommendation Systems** – Used in e-commerce and streaming platforms to calculate user-item similarity and provide personalized content suggestions.  
-
-### 3. Explanation of Distance Metrics  
-The **Minkowski Distance** is a generalized distance metric given by:  
+$$
 D(X, Y) = \left( \sum_{i=1}^{n} |x_i - y_i|^p \right)^{\frac{1}{p}}
+$$  
 
-- When **p = 1**, it becomes **Manhattan Distance**.  
-- When **p = 2**, it becomes **Euclidean Distance**.  
-- When **p → ∞**, it becomes **Chebyshev Distance**.  
+- If **p = 1**, Manhattan Distance  
+- If **p = 2**, Euclidean Distance  
+- If **p = ∞**, Chebyshev Distance  
 
-### 4. Role of Cross-Validation in Model Performance  
-Cross-validation is a technique used to assess model performance by splitting the dataset into multiple training and testing subsets. It helps to:  
+#### 4. What is the role of cross-validation in model performance?  
+It is training the model on some and testing it on others iteratively, providing a more reliable estimate of how the model will perform on unseen data, helping to detect overfitting or underfitting.  
 
-- Provide a more reliable estimate of model performance on unseen data.  
-- Detect **overfitting** (model learns noise instead of patterns).  
-- Detect **underfitting** (model fails to capture key relationships in the data).  
-
-### 5. Variance and Bias in K-Nearest Neighbors (KNN)  
-- **Bias**: A high bias in KNN occurs when **k** is large, leading to oversimplification and poor performance on complex patterns.  
-- **Variance**: KNN is sensitive to fluctuations in training data, meaning that small changes in the dataset can significantly affect predictions.
+#### 5. Explain variance and bias in terms of KNN?  
+- **Bias**: A high bias in KNN can occur when the value of **k** is large.  
+- **Variance**: Algorithm's sensitivity to fluctuations in the training data.  
