@@ -1,8 +1,12 @@
 name: Run Tests
+
 on: [push]
+
 jobs:
   test:
     runs-on: ubuntu-latest
+    env:
+      WANDB_API_KEY: ${{secrets.WANDB_API_KEY}}  # Inject the secret as an environment variable
     steps:
       - uses: actions/checkout@v3
 
@@ -13,12 +17,10 @@ jobs:
 
       - name: Install dependencies
         run: |
-          sudo apt-get update
-          sudo apt-get install -y xvfb libgtk-3-dev libgl1 pkg-config
-          pip install numpy pandas scikit-learn opencv-python matplotlib nbconvert
+          pip install kaggle nbconvert jupyter wandb numpy pandas scikit-learn opencv-python matplotlib scipy
 
-      - name: Convert Notebook to Script
+      - name: Convert Jupyter Notebook to Python
         run: jupyter nbconvert --to script Ananya_Lab5.ipynb
 
-      - name: Run test script with virtual display
-        run: xvfb-run --auto-servernum --server-args="-screen 0 1024x768x24" python Ananya_Lab5.py
+      - name: Run Converted Script
+        run: python Ananya_Lab5.py
