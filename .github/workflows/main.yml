@@ -1,26 +1,33 @@
-name: Run Tests
+name: Run Tests and Notebook
 
 on: [push]
 
 jobs:
   test:
     runs-on: ubuntu-latest
-    env:
-      WANDB_API_KEY: ${{secrets.WANDB_API_KEY}}  # Inject the secret as an environment variable
     steps:
       - uses: actions/checkout@v3
-
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
           python-version: '3.11'
-
+          
       - name: Install dependencies
         run: |
-          pip install kaggle nbconvert jupyter wandb numpy pandas scikit-learn opencv-python matplotlib scipy
-
-      - name: Convert Jupyter Notebook to Python
-        run: jupyter nbconvert --to script Ananya_Lab5.ipynb
-
-      - name: Run Converted Script
-        run: python Ananya_Lab5.py
+          python -m pip install --upgrade pip
+          pip install numpy pandas scikit-learn matplotlib opencv-python scipy wandb nbformat jupyter nbconvert
+          
+      - name: Run test script
+        run: python test_script.py
+        
+      - name: Execute notebook
+        env:
+          WANDB_API_KEY: "c6514b6a6bb47360dcd55395a14f4ad95e83ef2c"
+        run: |
+          jupyter nbconvert --to notebook --execute MLPR/DistanceClassificationMLPR-Lab5/Ananya_Lab5.ipynb --output executed_notebook.ipynb
+          
+      - name: Upload executed notebook
+        uses: actions/upload-artifact@v3
+        with:
+          name: executed-notebook
+          path: executed_notebook.ipynb
