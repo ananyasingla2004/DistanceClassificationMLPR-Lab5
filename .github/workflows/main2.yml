@@ -1,0 +1,233 @@
+name: Run Notebook with W&B Logging
+
+on:
+  push:
+    paths:
+      - 'MLPR/DistanceClassificationMLPR-Lab5/Ananya_Lab5.ipynb'
+      - '**/*.py'
+  pull_request:
+    paths:
+      - 'MLPR/DistanceClassificationMLPR-Lab5/Ananya_Lab5.ipynb'
+      - '**/*.py'
+  workflow_dispatch:  # Allow manual triggering
+
+jobs:
+  run-notebook:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+          
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install jupyter nbconvert nbformat matplotlib opencv-python scipy numpy scikit-learn pandas wandb Pillow
+          
+      - name: Verify notebook and dependencies
+        run: |
+          python -c "
+          import os
+          import nbformat
+          notebook_path = 'MLPR/DistanceClassificationMLPR-Lab5/Ananya_Lab5.ipynb'
+          assert os.path.exists(notebook_path), f'Notebook not found: {notebook_path}'
+          with open(notebook_path, 'r', encoding='utf-8') as f:
+              nb = nbformat.read(f, as_version=4)
+          print(f'Notebook validated successfully: {notebook_path}')
+          
+          # Verify critical dependencies
+          import wandb
+          import numpy
+          import matplotlib.pyplot
+          import cv2
+          import sklearn
+          print('All required dependencies are installed')
+          "
+          
+      - name: Execute notebook with W&B logging
+        env:
+          WANDB_API_KEY: "c6514b6a6bb47360dcd55395a14f4ad95e83ef2c"
+          WANDB_PROJECT: "DistanceClassificationMLPR-Lab5"
+          WANDB_NAME: "github-actions-run"
+          WANDB_LOG_MODEL: "true"
+        run: |
+          # Add timestamp to run for differentiation
+          TIMESTAMP=$(date +%Y%m%d_%H%M%S)
+          echo "Running notebook with timestamp: $TIMESTAMP"
+          export WANDB_RUN_GROUP="github-actions-$TIMESTAMP"
+          
+          # Create a modified version of the notebook with explicit wandb logging
+          python -c "
+          import nbformat
+          from nbformat.v4 import new_code_cell
+          
+          # Load notebook
+          notebook_path = 'MLPR/DistanceClassificationMLPR-Lab5/Ananya_Lab5.ipynb'
+          with open(notebook_path, 'r', encoding='utf-8') as f:
+              nb = nbformat.read(f, as_version=4)
+          
+          # Ensure all plots are logged to W&B
+          # Add a cell that enables matplotlib logging
+          wandb_logging_cell = new_code_cell(
+              source=\"\"\"
+              import wandb
+              import matplotlib.pyplot as plt
+              
+              # Configure wandb
+              wandb.login(key='c6514b6a6bb47360dcd55395a14f4ad95e83ef2c')
+              wandb.init(project='DistanceClassificationMLPR-Lab5', 
+                         name='github-actions-run',
+                         group=os.environ.get('WANDB_RUN_GROUP', 'auto-runs'))
+              
+              # Enable matplotlib logging to W&B
+              wandb.matplotlib.plot.auto_plot = True
+              
+              # Helper function to ensure plots are logged
+              orig_figure = plt.figure
+              def figure_with_wandb(*args, **kwargs):
+                  fig = orig_figure(*args, **kwargs)
+                  wandb.log({f'plot_{id(fig)}': fig})
+                  return fig
+              plt.figure = figure_with_wandb
+              
+              print('W&B logging configured successfully!')
+              \"\"\"
+          )
+          
+          # Add the cell at the beginning, after any imports
+          nb.cells.insert(1, wandb_logging_cell)
+          
+          # Save the modified notebook
+          modified_path = 'modified_for_wandb.ipynb'
+          with open(modified_path, 'w', encoding='utf-8') as f:
+              nbformat.write(nb, f)
+          
+          print('Modified notebook created with enhanced W&B logging')
+          "
+          
+          # Execute the modified notebook
+          jupyter nbconvert --to notebook --execute modified_for_wandb.ipynb --output executed_notebook.ipynb
+          
+          # Finalize W&B run
+          python -c "
+          import wandb
+          try:
+              wandb.finish()
+              print('W&B run finalized successfully')
+          except Exception as e:
+              print(f'Error finalizing W&B run: {e}')
+          "
+          
+      - name: Create W&B dashboard screenshot
+        run: |
+          # Install additional packages needed for screenshot
+          pip install playwright
+          python -m playwright install chromium
+          
+          # Take screenshot of W&B dashboard
+          python -c "
+          import os
+          import time
+          from playwright.sync_api import sync_playwright
+          
+          api_key = 'c6514b6a6bb47360dcd55395a14f4ad95e83ef2c'
+          project = 'DistanceClassificationMLPR-Lab5'
+          
+          # Extract username from WandB API
+          import wandb
+          api = wandb.Api(api_key=api_key)
+          username = api.default_entity
+          
+          # Generate dashboard URL
+          dashboard_url = f'https://wandb.ai/{username}/{project}'
+          screenshot_path = 'wandb_dashboard.png'
+          
+          def take_screenshot():
+              with sync_playwright() as p:
+                  browser = p.chromium.launch()
+                  page = browser.new_page()
+                  page.goto(dashboard_url)
+                  
+                  # Wait for login page and log in
+                  if 'login' in page.url:
+                      page.fill('input[name=email]', username)
+                      page.fill('input[name=password]', api_key)
+                      page.click('button[type=submit]')
+                      page.wait_for_navigation()
+                  
+                  # Wait for dashboard to load
+                  page.wait_for_load_state('networkidle')
+                  time.sleep(5)  # Extra wait for charts to render
+                  
+                  # Take screenshot
+                  page.screenshot(path=screenshot_path)
+                  browser.close()
+              
+              print(f'Screenshot saved to {screenshot_path}')
+              return os.path.exists(screenshot_path)
+          
+          try:
+              success = take_screenshot()
+              if not success:
+                  print('Failed to create screenshot')
+          except Exception as e:
+              print(f'Error taking screenshot: {e}')
+          "
+      
+      - name: Update README with dashboard screenshot
+        run: |
+          # Check if screenshot was created
+          if [ -f wandb_dashboard.png ]; then
+            # Update README.md with the screenshot
+            python -c "
+            import os
+            
+            readme_path = 'README.md'
+            if not os.path.exists(readme_path):
+                with open(readme_path, 'w') as f:
+                    f.write('# Distance Classification MLPR Lab 5\n\n')
+            
+            with open(readme_path, 'r') as f:
+                content = f.read()
+            
+            # Add/replace the W&B dashboard section
+            wandb_section = '## Weights & Biases Dashboard\n\nLatest results from automated runs:\n\n![W&B Dashboard](wandb_dashboard.png)\n'
+            
+            if '## Weights & Biases Dashboard' in content:
+                # Replace existing section
+                import re
+                pattern = r'## Weights & Biases Dashboard.*?!\[W&B Dashboard\]\([^\)]+\)\s*'
+                content = re.sub(pattern, wandb_section, content, flags=re.DOTALL)
+            else:
+                # Add new section
+                content += '\n' + wandb_section
+            
+            with open(readme_path, 'w') as f:
+                f.write(content)
+            
+            print('README.md updated with W&B dashboard screenshot')
+            "
+          else
+            echo "Screenshot not found, skipping README update"
+          fi
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: notebook-outputs
+          path: |
+            executed_notebook.ipynb
+            wandb_dashboard.png
+          
+      - name: Commit changes to README
+        if: success() && github.event_name == 'push'
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add README.md wandb_dashboard.png
+          git commit -m "Update README with latest W&B dashboard [skip ci]" || echo "No changes to commit"
+          git push
