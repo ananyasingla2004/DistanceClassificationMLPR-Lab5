@@ -1,0 +1,11 @@
+{"time":"2025-02-26T12:25:38.285645+05:30","level":"INFO","msg":"stream: starting","core version":"0.19.7","symlink path":"/Users/ananyasingla/Downloads/PLAKSHA COLLEGE/SEM 4/MLPR/DistanceClassificationMLPR-Lab5/wandb/run-20250226_122538-bab89hgv/logs/debug-core.log"}
+{"time":"2025-02-26T12:25:38.503313+05:30","level":"INFO","msg":"created new stream","id":"bab89hgv"}
+{"time":"2025-02-26T12:25:38.503364+05:30","level":"INFO","msg":"stream: started","id":"bab89hgv"}
+{"time":"2025-02-26T12:25:38.503422+05:30","level":"INFO","msg":"sender: started","stream_id":"bab89hgv"}
+{"time":"2025-02-26T12:25:38.503448+05:30","level":"INFO","msg":"writer: Do: started","stream_id":"bab89hgv"}
+{"time":"2025-02-26T12:25:38.503453+05:30","level":"INFO","msg":"handler: started","stream_id":"bab89hgv"}
+{"time":"2025-02-26T12:25:39.012567+05:30","level":"INFO","msg":"Starting system monitor"}
+{"time":"2025-02-26T12:25:39.125947+05:30","level":"INFO","msg":"Pausing system monitor"}
+{"time":"2025-02-26T12:25:41.837864+05:30","level":"INFO","msg":"Resuming system monitor"}
+{"time":"2025-02-26T12:25:43.079838+05:30","level":"INFO","msg":"Pausing system monitor"}
+{"time":"2025-02-26T12:36:25.283295+05:30","level":"INFO","msg":"api: retrying error","error":"Post \"https://api.wandb.ai/files/ananya-singla-ug23-plaksha/DistanceClassificationMLPR-Lab5/bab89hgv/file_stream\": read tcp 10.1.58.178:60774->35.186.228.49:443: read: connection reset by peer"}
